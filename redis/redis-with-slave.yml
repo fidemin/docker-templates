@@ -1,0 +1,16 @@
+version: '3.7'
+services:
+  redis-master:
+    image: redis:latest
+    hostname: redis-master
+
+  redis-slave-1:
+    image: redis:latest
+    hostname: redis-slave-1
+    command: redis-server --slaveof redis-master 6379
+  redis-slave-2:
+    image: redis:latest
+    hostname: redis-slave-2
+    command: redis-server --slaveof redis-master 6379
+
+
