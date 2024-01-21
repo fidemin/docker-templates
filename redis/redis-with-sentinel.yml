@@ -1,0 +1,39 @@
+version: '3.7'
+services:
+  redis-master:
+    image: redis:latest
+    hostname: redis-master
+  redis-slave-1:
+    image: redis:latest
+    hostname: redis-slave-1
+    command: redis-server --slaveof redis-master 6379
+  redis-slave-2:
+    image: redis:latest
+    hostname: redis-slave-2
+    command: redis-server --slaveof redis-master 6379
+  redis-sentinel1:
+    image: redis:latest
+    command: bash -c "
+        chown -R redis:redis /usr/local/etc/redis
+        && redis-server /usr/local/etc/redis/sentinel.conf --sentinel"
+    volumes:
+      - "./sentinel/conf_sentinel1:/usr/local/etc/redis"
+    depends_on:
+      - redis-master
+  redis-sentinel2:
+    image: redis:latest
+    command: redis-server /usr/local/etc/redis/sentinel.conf --sentinel
+    volumes:
+      - "./sentinel/conf_sentinel2:/usr/local/etc/redis"
+    depends_on:
+      - redis-master
+  redis-sentinel3:
+    image: redis:latest
+    command: redis-server /usr/local/etc/redis/sentinel.conf --sentinel
+    volumes:
+      - "./sentinel/conf_sentinel3:/usr/local/etc/redis"
+    depends_on:
+      - redis-master
+    
+
+
