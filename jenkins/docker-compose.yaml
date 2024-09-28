@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  jenkins: 
+    image: jenkins/jenkins:2.361.2-lts
+    container_name: my-jenkins
+    environment:
+      - TZ=Asia/Seoul
+    user: root
+    privileged: true
+    ports:
+      - 10002:8080
+      - 50000:50000
+    restart: always
+    volumes:
+      - ${HOST_JENKINS_VOLUME}:/var/jenkins_home

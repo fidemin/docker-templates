@@ -1,3 +1,6 @@
 
 # dynamic config files
 conf_*
+
+# intellj
+.idea
