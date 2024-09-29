@@ -8,6 +8,8 @@ services:
       - "8080:8080"  # Mapping host port 8080 to container port 8080
     volumes:
         - $DAG_DIR:/opt/airflow/dags  # Mapping host DAG_DIR to container /opt/airflow/dags
+    environment:
+      - AIRFLOW__API__AUTH_BACKEND=airflow.api.auth.backend.basic_auth
     entrypoint:
       - /bin/bash
       - -c
