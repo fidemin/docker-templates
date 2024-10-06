@@ -10,6 +10,8 @@ services:
         - $DAG_DIR:/opt/airflow/dags  # Mapping host DAG_DIR to container /opt/airflow/dags
     environment:
       - AIRFLOW__API__AUTH_BACKEND=airflow.api.auth.backend.basic_auth
+      - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://$DB_USER:$DB_PASSWORD@$DB_HOST:$DB_PORT/airflow
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor  # Local Executor is better option with postgresql
     entrypoint:
       - /bin/bash
       - -c
